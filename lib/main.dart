@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:github_repo/presentation/home/home_controller.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
+import 'application/home/entities/github_repo_model.dart';
+import 'env.dart';
 import 'presentation/home/home_view.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(GithubRepoListAdapter());
+  Hive.registerAdapter(ItemAdapter());
+  Hive.registerAdapter(OwnerAdapter());
+  await Hive.openBox<GithubRepoList>(localStorageName);
   runApp(const MyApp());
 }
 
