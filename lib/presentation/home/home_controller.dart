@@ -53,4 +53,17 @@ class HomeController extends ChangeNotifier {
     isLoading = false;
     notify();
   }
+
+  void sort(String? val) {
+    if (val == "star") {
+      githubRepoList?.items.sort(
+        (a, b) => b.stargazersCount.compareTo(a.stargazersCount),
+      );
+    } else if (val == "update") {
+      githubRepoList?.items.sort(
+        (a, b) => b.updatedAt.compareTo(a.updatedAt),
+      );
+    }
+    notify();
+  }
 }
