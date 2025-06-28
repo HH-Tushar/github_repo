@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:github_repo/core/responsive.dart';
 import 'package:github_repo/env.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constant.dart';
 import '../repo_details/details_view.dart';
 import 'home_controller.dart';
+part 'layout/mobile_view.dart';
+part 'layout/tab_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = context.watch();
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -20,59 +21,10 @@ class HomeView extends StatelessWidget {
         title: Text(appName),
         backgroundColor: Colors.green,
       ),
-      body:
-          homeController.isLoading
-              ? Center(child: CircularProgressIndicator())
-              : (homeController.githubRepoList == null &&
-                  homeController.isLoading == false)
-              ? Center(child: Text("No Data found"))
-              : RefreshIndicator(
-                onRefresh: () => homeController.refresh(),
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
-                  itemCount: homeController.githubRepoList?.items.length ?? 0,
-                  itemBuilder: (context, index) {
-                    final item = homeController.githubRepoList!.items[index];
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      color: Colors.green.shade50,
-                      child: InkWell(
-                        onTap:
-                            () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => RepoDetailsView(data: item),
-                              ),
-                            ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                            vertical: 4,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Repo Name : ${item.name}",
-                                style: textTheme.titleMedium,
-                              ),
-                              Text("Owner : ${item.owner.login}"),
-                              Text(
-                                "Total Star Count : ${item.stargazersCount > 1000 ? "${(item.stargazersCount / 1000).toStringAsFixed(2)}k" : item.stargazersCount}",
-                              ),
-                              Text(
-                                "Updated At : ${month[item.updatedAt.month - 1]}-${item.updatedAt.day}-${item.updatedAt.year}",
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+      body: ResponsiveLayout(
+        mobileLayout: const _MobileLayout(),
+        tabLayout: const _TabLayout(),
+      ),
     );
   }
 }
