@@ -3,6 +3,7 @@ import 'package:github_repo/env.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constant.dart';
+import '../repo_details/details_view.dart';
 import 'home_controller.dart';
 
 class HomeView extends StatelessWidget {
@@ -39,6 +40,12 @@ class HomeView extends StatelessWidget {
                       clipBehavior: Clip.antiAlias,
                       color: Colors.green.shade50,
                       child: InkWell(
+                        onTap:
+                            () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => RepoDetailsView(data: item),
+                              ),
+                            ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,
@@ -47,9 +54,14 @@ class HomeView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(item.name, style: textTheme.titleMedium),
+                              Text(
+                                "Repo Name : ${item.name}",
+                                style: textTheme.titleMedium,
+                              ),
                               Text("Owner : ${item.owner.login}"),
-                              Text("${item.stargazersCount} ⭐"),
+                              Text(
+                                "Total Star Count : ${item.stargazersCount > 1000 ? "${(item.stargazersCount / 1000).toStringAsFixed(2)}k" : item.stargazersCount}",
+                              ),
                               Text(
                                 "Updated At : ${month[item.updatedAt.month - 1]}-${item.updatedAt.day}-${item.updatedAt.year}",
                               ),

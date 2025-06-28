@@ -35,13 +35,13 @@ class Item {
   @HiveField(3)
   final Owner owner;
   @HiveField(4)
-  final String htmlUrl;
+  final String url;
   @HiveField(5)
   final String? description;
   @HiveField(6)
-  final String url;
+  final List<String> topics;
   @HiveField(7)
-  final String commitsUrl;
+  final String defaultBranch;
   @HiveField(8)
   final DateTime createdAt;
   @HiveField(9)
@@ -58,22 +58,15 @@ class Item {
   final int forksCount;
   @HiveField(15)
   final int openIssuesCount;
-  @HiveField(16)
-  final List<String> topics;
-  @HiveField(17)
-  final int forks;
-  @HiveField(18)
-  final String defaultBranch;
 
   Item({
     required this.id,
     required this.name,
     required this.fullName,
     required this.owner,
-    required this.htmlUrl,
-    this.description,
     required this.url,
-    required this.commitsUrl,
+    this.description,
+
     required this.createdAt,
     required this.updatedAt,
     required this.gitUrl,
@@ -83,7 +76,6 @@ class Item {
     required this.forksCount,
     required this.openIssuesCount,
     required this.topics,
-    required this.forks,
     required this.defaultBranch,
   });
 
@@ -96,10 +88,8 @@ class Item {
     name: json["name"],
     fullName: json["full_name"],
     owner: Owner.fromJson(json["owner"]),
-    htmlUrl: json["html_url"],
-    description: json["description"],
     url: json["url"],
-    commitsUrl: json["commits_url"],
+    description: json["description"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     gitUrl: json["git_url"],
@@ -109,7 +99,6 @@ class Item {
     forksCount: json["forks_count"],
     openIssuesCount: json["open_issues_count"],
     topics: List<String>.from(json["topics"].map((x) => x)),
-    forks: json["forks"],
     defaultBranch: json["default_branch"],
   );
 
@@ -118,10 +107,8 @@ class Item {
     "name": name,
     "full_name": fullName,
     "owner": owner.toJson(),
-    "html_url": htmlUrl,
-    "description": description,
     "url": url,
-    "commits_url": commitsUrl,
+    "description": description,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "git_url": gitUrl,
@@ -131,7 +118,6 @@ class Item {
     "forks_count": forksCount,
     "open_issues_count": openIssuesCount,
     "topics": List<dynamic>.from(topics.map((x) => x)),
-    "forks": forks,
     "default_branch": defaultBranch,
   };
 }

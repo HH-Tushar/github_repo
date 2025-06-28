@@ -55,10 +55,8 @@ class ItemAdapter extends TypeAdapter<Item> {
       name: fields[1] as String,
       fullName: fields[2] as String,
       owner: fields[3] as Owner,
-      htmlUrl: fields[4] as String,
+      url: fields[4] as String,
       description: fields[5] as String?,
-      url: fields[6] as String,
-      commitsUrl: fields[7] as String,
       createdAt: fields[8] as DateTime,
       updatedAt: fields[9] as DateTime,
       gitUrl: fields[10] as String,
@@ -67,16 +65,15 @@ class ItemAdapter extends TypeAdapter<Item> {
       stargazersCount: fields[13] as int,
       forksCount: fields[14] as int,
       openIssuesCount: fields[15] as int,
-      topics: (fields[16] as List).cast<String>(),
-      forks: fields[17] as int,
-      defaultBranch: fields[18] as String,
+      topics: (fields[6] as List).cast<String>(),
+      defaultBranch: fields[7] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Item obj) {
     writer
-      ..writeByte(19)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -86,13 +83,13 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(3)
       ..write(obj.owner)
       ..writeByte(4)
-      ..write(obj.htmlUrl)
+      ..write(obj.url)
       ..writeByte(5)
       ..write(obj.description)
       ..writeByte(6)
-      ..write(obj.url)
+      ..write(obj.topics)
       ..writeByte(7)
-      ..write(obj.commitsUrl)
+      ..write(obj.defaultBranch)
       ..writeByte(8)
       ..write(obj.createdAt)
       ..writeByte(9)
@@ -108,13 +105,7 @@ class ItemAdapter extends TypeAdapter<Item> {
       ..writeByte(14)
       ..write(obj.forksCount)
       ..writeByte(15)
-      ..write(obj.openIssuesCount)
-      ..writeByte(16)
-      ..write(obj.topics)
-      ..writeByte(17)
-      ..write(obj.forks)
-      ..writeByte(18)
-      ..write(obj.defaultBranch);
+      ..write(obj.openIssuesCount);
   }
 
   @override
