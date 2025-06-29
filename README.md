@@ -33,8 +33,8 @@ A Flutter application that allows users to search and browse the **top 50 most s
 - 🌙 **Theme Support (Light & Dark)**  
   Toggle automatically based on system settings with Material 3 color scheme
 
-- 🧪 **App Flavors**  
-  Easily switch between development and production API endpoints using build flavors
+- 🧪 **development VS production**  
+  Easily switch between development and production API endpoints by changing baseUrl in env.dart file
 
 
 ## 🧱 Architecture
