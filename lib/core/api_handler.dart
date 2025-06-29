@@ -22,3 +22,7 @@ class Failure<C extends Object> {
   final C? code;
 }
 
+class NetworkFailure extends Failure{
+   const NetworkFailure():super(title: "",description: "");
+}
+

@@ -7,11 +7,18 @@ class _MobileLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeController homeController = context.watch();
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     return homeController.isLoading
         ? Center(child: CircularProgressIndicator())
         : (homeController.githubRepoList == null &&
             homeController.isLoading == false)
-        ? Center(child: Text("No Data found"))
+        ? Center(child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(homeController.errorMessage??"No Data Found",textAlign: TextAlign.center,),
+            IconButton(onPressed: ()=>homeController.refresh(), icon: Icon(Icons.refresh))
+          ],
+        ))
         : RefreshIndicator(
           onRefresh: () => homeController.refresh(),
           child: ListView.builder(
@@ -24,7 +31,7 @@ class _MobileLayout extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 clipBehavior: Clip.antiAlias,
-                color: Colors.green.shade50,
+                color: colorScheme.secondaryContainer,
                 child: InkWell(
                   onTap:
                       () => Navigator.of(context).push(
