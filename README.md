@@ -52,7 +52,7 @@ This project follows a **hybrid architecture** with a clean separation between *
 | [`provider`](https://pub.dev/packages/provider) | State management |
 | [`hive_flutter`](https://pub.dev/packages/hive_flutter) | Local data persistence |
 | [`http`](https://pub.dev/packages/http) | API requests |
-| [`cached_network_image`] for image cache.
+| [`cached_network_image`] |For Network image cache|
 
 # Flutter Version: 3.29.0
 
